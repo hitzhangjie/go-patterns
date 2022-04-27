@@ -1,0 +1,174 @@
+@startuml
+
+package "builder" {
+	class "ColorStyle" as builder.ColorStyle <<V,Orchid>>
+}
+
+
+
+package "builder" {
+	class "Door" as builder.Door <<V,Orchid>> {
+		+Pos: builder.Pos
+		+Material: builder.MaterialStyle
+		+Height: int
+		+Width: int
+		+Color: builder.ColorStyle
+	}
+}
+
+	builder.Door --> builder.Pos
+	builder.Door --> builder.MaterialStyle
+	builder.Door --> builder.ColorStyle
+
+
+package "builder" {
+	class "Floor" as builder.Floor <<V,Orchid>> {
+		+Vetexes: []builder.Pos
+		+Material: builder.MaterialStyle
+	}
+}
+
+	builder.Floor --> builder.Pos
+	builder.Floor --> builder.MaterialStyle
+
+
+package "builder" {
+	class "GlassStyle" as builder.GlassStyle <<V,Orchid>>
+}
+
+
+
+package "builder" {
+	class "House" as builder.House <<V,Orchid>> {
+		+Floor: []builder.Floor
+		+Walls: []builder.Wall
+		+Rooves: []builder.Roof
+	}
+}
+
+	builder.House --> builder.Floor
+	builder.House --> builder.Wall
+	builder.House --> builder.Roof
+
+
+package "builder" {
+	class "MaterialStyle" as builder.MaterialStyle <<V,Orchid>>
+}
+
+
+
+package "builder" {
+	class "Orderer" as builder.Orderer <<E,#FFCC00>> {
+		-b: *builder.builder
+		+Floors: []builder.Floor
+		+Wall: []builder.Wall
+		+Windows: []builder.Window
+		+Doors: []builder.Door
+		+WantFloor(vetexes: []builder.Pos, style: builder.MaterialStyle)
+		+WantWindow(pos: builder.Pos, height: int, width: int, style: builder.GlassStyle)
+		+WantWall(pos: builder.Pos, color: builder.ColorStyle)
+		+Build(): builder.House
+	}
+}
+
+	builder.Orderer --> builder.builder
+	builder.Orderer --> builder.Floor
+	builder.Orderer --> builder.Wall
+	builder.Orderer --> builder.Window
+	builder.Orderer --> builder.Door
+
+	builder.Orderer ..> builder.Pos : <<use>> 
+	builder.Orderer ..> builder.MaterialStyle : <<use>> 
+	builder.Orderer ..> builder.Pos : <<use>> 
+	builder.Orderer ..> builder.GlassStyle : <<use>> 
+	builder.Orderer ..> builder.Pos : <<use>> 
+	builder.Orderer ..> builder.ColorStyle : <<use>> 
+	builder.Orderer ..> builder.House : <<return>> 
+
+package "builder" {
+	class "Pos" as builder.Pos <<V,Orchid>> {
+		+X: int
+		+Y: int
+		+Z: int
+	}
+}
+
+
+
+package "builder" {
+	class "Roof" as builder.Roof <<V,Orchid>> {
+		+Style: builder.RoofStyle
+	}
+}
+
+	builder.Roof --> builder.RoofStyle
+
+
+package "builder" {
+	class "RoofStyle" as builder.RoofStyle <<V,Orchid>>
+}
+
+
+
+package "builder" {
+	class "Wall" as builder.Wall <<V,Orchid>> {
+		+Pos: builder.Pos
+		+Window: []builder.Window
+		+Door: []builder.Door
+		+Color: builder.ColorStyle
+		+BuildWindow(pos: builder.Pos, height: int, width: int, style: builder.GlassStyle): *builder.Wall
+		+BuildDoor(pos: builder.Pos, height: int, width: int, style: builder.MaterialStyle, color: builder.ColorStyle): *builder.Wall
+	}
+}
+
+	builder.Wall --> builder.Pos
+	builder.Wall --> builder.Window
+	builder.Wall --> builder.Door
+	builder.Wall --> builder.ColorStyle
+
+	builder.Wall ..> builder.Pos : <<use>> 
+	builder.Wall ..> builder.GlassStyle : <<use>> 
+	builder.Wall ..> builder.Wall : <<return>> 
+	builder.Wall ..> builder.Pos : <<use>> 
+	builder.Wall ..> builder.MaterialStyle : <<use>> 
+	builder.Wall ..> builder.ColorStyle : <<use>> 
+	builder.Wall ..> builder.Wall : <<return>> 
+
+package "builder" {
+	class "Window" as builder.Window <<V,Orchid>> {
+		+Pos: builder.Pos
+		+Height: int
+		+Width: int
+		+Glass: builder.GlassStyle
+	}
+}
+
+	builder.Window --> builder.Pos
+	builder.Window --> builder.GlassStyle
+
+
+package "builder" {
+	class "builder" as builder.builder <<V,Orchid>> {
+		-house: builder.House
+		+BuildRooves(style: builder.RoofStyle): *builder.builder
+		+BuildWall(pos: builder.Pos, color: builder.ColorStyle): *builder.Wall
+		+BuildFloor(pos: []builder.Pos, style: builder.MaterialStyle): *builder.builder
+		+Build(): builder.House
+	}
+}
+
+	builder.builder --> builder.House
+
+	builder.builder ..> builder.RoofStyle : <<use>> 
+	builder.builder ..> builder.builder : <<return>> 
+	builder.builder ..> builder.Pos : <<use>> 
+	builder.builder ..> builder.ColorStyle : <<use>> 
+	builder.builder ..> builder.Wall : <<return>> 
+	builder.builder ..> builder.Pos : <<use>> 
+	builder.builder ..> builder.MaterialStyle : <<use>> 
+	builder.builder ..> builder.builder : <<return>> 
+	builder.builder ..> builder.House : <<return>> 
+
+
+
+@enduml
