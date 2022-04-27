@@ -1,0 +1,113 @@
+@startuml
+
+package "abstract_factory" {
+	interface "IFactory" as abstract_factory.IFactory {
+		+CreateProductA(): abstract_factory.IProductA
+		+CreateProductB(): abstract_factory.IProductB
+		+Style(): abstract_factory.Style
+	}
+}
+
+
+	abstract_factory.IFactory ..> abstract_factory.IProductA : <<return>> 
+	abstract_factory.IFactory ..> abstract_factory.IProductB : <<return>> 
+	abstract_factory.IFactory ..> abstract_factory.Style : <<return>> 
+
+package "abstract_factory" {
+	interface "IProductA" as abstract_factory.IProductA {
+		+DoSomethingA(): error
+	}
+}
+
+
+
+package "abstract_factory" {
+	interface "IProductB" as abstract_factory.IProductB {
+		+DoSomethingB(): error
+	}
+}
+
+
+
+package "abstract_factory" {
+	class "Style" as abstract_factory.Style <<V,Orchid>>
+}
+
+
+
+package "abstract_factory" {
+	class "Style1Factory" as abstract_factory.Style1Factory <<V,Orchid>> {
+		+Style(): abstract_factory.Style
+		+CreateProductA(): abstract_factory.IProductA
+		+CreateProductB(): abstract_factory.IProductB
+	}
+}
+
+
+	abstract_factory.Style1Factory ..> abstract_factory.Style : <<return>> 
+	abstract_factory.Style1Factory ..> abstract_factory.IProductA : <<return>> 
+	abstract_factory.Style1Factory ..> abstract_factory.IProductB : <<return>> 
+
+package "abstract_factory" {
+	class "Style1ProductA" as abstract_factory.Style1ProductA <<V,Orchid>> {
+		+DoSomethingA(): error
+	}
+}
+
+
+
+package "abstract_factory" {
+	class "Style1ProductB" as abstract_factory.Style1ProductB <<V,Orchid>> {
+		+DoSomethingB(): error
+	}
+}
+
+
+
+package "abstract_factory" {
+	class "Style2Factory" as abstract_factory.Style2Factory <<V,Orchid>> {
+		+Style(): abstract_factory.Style
+		+CreateProductA(): abstract_factory.IProductA
+		+CreateProductB(): abstract_factory.IProductB
+	}
+}
+
+
+	abstract_factory.Style2Factory ..> abstract_factory.Style : <<return>> 
+	abstract_factory.Style2Factory ..> abstract_factory.IProductA : <<return>> 
+	abstract_factory.Style2Factory ..> abstract_factory.IProductB : <<return>> 
+
+package "abstract_factory" {
+	class "Style2ProductA" as abstract_factory.Style2ProductA <<V,Orchid>> {
+		+DoSomethingA(): error
+	}
+}
+
+
+
+package "abstract_factory" {
+	class "Style2ProductB" as abstract_factory.Style2ProductB <<V,Orchid>> {
+		+DoSomethingB(): error
+	}
+}
+
+
+
+	abstract_factory.Style1Factory -up-|> abstract_factory.IFactory
+	abstract_factory.Style1ProductA -up-|> abstract_factory.IProductA
+	abstract_factory.Style1ProductB -up-|> abstract_factory.IProductB
+	abstract_factory.Style2Factory -up-|> abstract_factory.IFactory
+	abstract_factory.Style2ProductA -up-|> abstract_factory.IProductA
+	abstract_factory.Style2ProductB -up-|> abstract_factory.IProductB
+
+package "abstract_factory" {
+	note as N_abstract_factory_Style
+		<b>Style</b>
+
+		Style1
+		Style2
+	end note
+}
+N_abstract_factory_Style --> abstract_factory.Style
+
+@enduml
