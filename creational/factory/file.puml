@@ -1,0 +1,62 @@
+@startuml
+
+package "factory" {
+	class "Factory" as factory.Factory <<V,Orchid>> {
+		+CreateProductA(): factory.IProductA
+		+CreateProductB(): factory.IProductB
+	}
+}
+
+
+	factory.Factory ..> factory.IProductA : <<return>> 
+	factory.Factory ..> factory.IProductB : <<return>> 
+
+package "factory" {
+	interface "IFactory" as factory.IFactory {
+		+CreateProductA(): factory.IProductA
+		+CreateProductB(): factory.IProductB
+	}
+}
+
+
+	factory.IFactory ..> factory.IProductA : <<return>> 
+	factory.IFactory ..> factory.IProductB : <<return>> 
+
+package "factory" {
+	interface "IProductA" as factory.IProductA {
+		+DoSomethingA(): error
+	}
+}
+
+
+
+package "factory" {
+	interface "IProductB" as factory.IProductB {
+		+DoSomethingB(): error
+	}
+}
+
+
+
+package "factory" {
+	class "ProductA" as factory.ProductA <<V,Orchid>> {
+		+DoSomethingA(): error
+	}
+}
+
+
+
+package "factory" {
+	class "ProductB" as factory.ProductB <<V,Orchid>> {
+		+DoSomethingB(): error
+	}
+}
+
+
+
+	factory.Factory -up-|> factory.IFactory
+	factory.ProductA -up-|> factory.IProductA
+	factory.ProductB -up-|> factory.IProductB
+
+
+@enduml
