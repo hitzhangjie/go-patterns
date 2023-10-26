@@ -91,8 +91,6 @@ package "abstract_factory" {
 	}
 }
 
-
-
 	abstract_factory.Style1Factory -up-|> abstract_factory.IFactory
 	abstract_factory.Style1ProductA -up-|> abstract_factory.IProductA
 	abstract_factory.Style1ProductB -up-|> abstract_factory.IProductB
@@ -109,5 +107,10 @@ package "abstract_factory" {
 	end note
 }
 N_abstract_factory_Style --> abstract_factory.Style
+
+abstract_factory.Style1Factory ..> abstract_factory.Style1ProductA
+abstract_factory.Style1Factory ..> abstract_factory.Style1ProductB
+abstract_factory.Style2Factory ..> abstract_factory.Style2ProductA
+abstract_factory.Style2Factory ..> abstract_factory.Style2ProductB
 
 @enduml
