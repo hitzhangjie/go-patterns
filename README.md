@@ -6,7 +6,6 @@
 
 go-patterns actually is short for design patterns in go, which shows list of demos behind the concepts.
 
-
 We must think about the following questions before we dive into the demos, it is really important.
 
 - What's a pattern?
