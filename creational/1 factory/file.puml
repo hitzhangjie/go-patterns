@@ -7,7 +7,6 @@ package "factory" {
 	}
 }
 
-
 	factory.Factory ..> factory.IProductA : <<return>> 
 	factory.Factory ..> factory.IProductB : <<return>> 
 
@@ -18,7 +17,6 @@ package "factory" {
 	}
 }
 
-
 	factory.IFactory ..> factory.IProductA : <<return>> 
 	factory.IFactory ..> factory.IProductB : <<return>> 
 
@@ -28,15 +26,11 @@ package "factory" {
 	}
 }
 
-
-
 package "factory" {
 	interface "IProductB" as factory.IProductB {
 		+DoSomethingB(): error
 	}
 }
-
-
 
 package "factory" {
 	class "ProductA" as factory.ProductA <<V,Orchid>> {
@@ -44,19 +38,17 @@ package "factory" {
 	}
 }
 
-
-
 package "factory" {
 	class "ProductB" as factory.ProductB <<V,Orchid>> {
 		+DoSomethingB(): error
 	}
 }
 
-
-
 	factory.Factory -up-|> factory.IFactory
 	factory.ProductA -up-|> factory.IProductA
 	factory.ProductB -up-|> factory.IProductB
 
+	factory.Factory ..> factory.ProductA
+	factory.Factory ..> factory.ProductB
 
 @enduml

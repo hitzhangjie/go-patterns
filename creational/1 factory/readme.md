@@ -7,7 +7,7 @@ Solution:
     view the file.puml, the factory is responsible for create the different 
     products like 'IProductA' and 'IProductB'.
 
-variants: 
+Variants: 
     1. abstract factory pattern: when you want to build different styles 
        of different products, and you don't want to bind the products 
        with the specific class.
