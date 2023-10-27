@@ -5,4 +5,5 @@ use (
 	./creational/2_abstract_factory
 	./creational/3_builder
 	./creational/4_prototype
+	./creational/5_singleton
 )
