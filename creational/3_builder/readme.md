@@ -15,6 +15,13 @@ Context:
 Solution: 
     use builder pattern to build the final object step by step.
 
+    don't create the complex object by its own class's constructor, but rather
+    move the creation logic to a separate builder class. this builder will
+    build the complex object step by step.
+
+    this solution will eliminate the long parameter list and the complex
+    creation logic.
+
 Variants:
     use function option pattern to control the constructor behavior. the 
     constructor define default values for all underlying parameters that 

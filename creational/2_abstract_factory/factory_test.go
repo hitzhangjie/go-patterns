@@ -3,7 +3,7 @@ package abstract_factory_test
 import (
 	"testing"
 
-	af "github.com/hitzhangjie/go-patterns/creational/abstract_factory"
+	af "abstract_factory"
 )
 
 func Test_Creational_AbstractFactory(t *testing.T) {

@@ -8,7 +8,6 @@ Solution:
     products like 'IProductA' and 'IProductB' with different styles.
 
 Variants: 
-    
     1. factory pattern: when you want to build different products with only one 
         style, and you don't want to bind the products with the specific class.
     2. 

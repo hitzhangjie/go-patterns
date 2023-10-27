@@ -1,0 +1,7 @@
+go 1.21.1
+
+use (
+	./creational/1_factory
+	./creational/2_abstract_factory
+	./creational/3_builder
+)

@@ -46,5 +46,6 @@ func (ord *Orderer) Build() House {
 	// - call ord.b.BuildWall with ord.b.BuildWindow and ord.b.BuildDoor
 	// - call ord.b.BuildRooves
 	// - call ord.b.Build() to get the final House
+
 	return ord.b.Build()
 }

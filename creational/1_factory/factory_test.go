@@ -3,7 +3,7 @@ package factory_test
 import (
 	"testing"
 
-	"github.com/hitzhangjie/go-patterns/creational/factory"
+	"factory"
 )
 
 func Test_Creational_Factory(t *testing.T) {

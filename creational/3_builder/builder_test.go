@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/hitzhangjie/go-patterns/creational/builder"
+	"builder"
 )
 
 func Test_Creational_Builder(t *testing.T) {
@@ -14,7 +14,9 @@ func Test_Creational_Builder(t *testing.T) {
 		BuildDoor(builder.Pos{0, 1, 0}, 2, 1, builder.MaterialStyle(0), builder.ColorStyle(0)).
 		BuildWindow(builder.Pos{0, 2, 0}, 1, 1, builder.GlassStyle(0))
 	//builder another 3 walls with doors and windows
-	//...
+	//bd.BuildWall(...).
+	//  BuildDoor(...).
+	//  Buildwindow(...)
 	bd.BuildRooves(builder.RoofStyle(0))
 	house := bd.Build()
 	fmt.Printf("The house is built: %+v", house)
