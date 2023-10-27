@@ -6,4 +6,11 @@ use (
 	./creational/3_builder
 	./creational/4_prototype
 	./creational/5_singleton
+	./structural/1_adapter
+	./structural/2_bridge
+	./structural/3_composite
+	./structural/4_decorator
+	./structural/5_facade
+	./structural/6_flyweight
+	./structural/7_proxy
 )
