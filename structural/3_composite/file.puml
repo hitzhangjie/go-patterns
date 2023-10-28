@@ -1,0 +1,34 @@
+@startuml
+namespace composite {
+    interface File  {
+        + Name() string
+        + Size() (int, error)
+        + Add(f File) error
+
+    }
+    class file << (S,Aquamarine) >> {
+        - name string
+        - size int
+
+        + Name() string
+        + Size() (int, error)
+        + Add(file File) error
+
+    }
+    class folder << (S,Aquamarine) >> {
+        - name string
+        - size int
+        - mode int
+        - files []File
+
+        + Name() string
+        + Size() (int, error)
+        + Add(file File) error
+
+    }
+}
+
+"composite.File" <|-- "composite.file"
+"composite.File" <|-- "composite.folder"
+
+@enduml
