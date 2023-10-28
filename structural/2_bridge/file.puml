@@ -1,0 +1,49 @@
+@startuml
+namespace bridge {
+    class Blue << (S,Aquamarine) >> {
+        + String() string
+
+    }
+    class Circle << (S,Aquamarine) >> {
+        + Radius int
+
+        + Name() string
+        + String() string
+
+    }
+    interface Color  {
+        + String() string
+
+    }
+    class Red << (S,Aquamarine) >> {
+        + String() string
+
+    }
+    interface Shape  {
+        + Name() string
+        + String() string
+
+    }
+    class Square << (S,Aquamarine) >> {
+        + Edge int
+
+        + Name() string
+        + String() string
+
+    }
+    class base << (S,Aquamarine) >> {
+        + Color Color
+
+    }
+}
+"bridge.base" *-- "bridge.Circle"
+"bridge.base" *-- "bridge.Square"
+
+"bridge.Color" <|-- "bridge.Blue"
+"bridge.Color" <|-- "bridge.Circle"
+"bridge.Shape" <|-- "bridge.Circle"
+"bridge.Color" <|-- "bridge.Red"
+"bridge.Color" <|-- "bridge.Square"
+"bridge.Shape" <|-- "bridge.Square"
+
+@enduml
