@@ -1,0 +1,45 @@
+@startuml
+namespace decorator {
+    class ChkDirtyWordsProcessor << (S,Aquamarine) >> {
+        + Process(dat []byte) ([]byte, error)
+
+    }
+    class ChkTypoProcessor << (S,Aquamarine) >> {
+        + Process(dat []byte) ([]byte, error)
+
+    }
+    class Options << (S,Aquamarine) >> {
+        + ChkTypo bool
+        + ChkDirtyWords bool
+
+    }
+    interface Processor  {
+        + Process( []byte) ([]byte, error)
+
+    }
+    class articleProcessor << (S,Aquamarine) >> {
+        - processors []Processor
+        - opts Options
+
+        + Process(dat []byte) ([]byte, error)
+
+    }
+    class perfectArticleProcessor << (S,Aquamarine) >> {
+        - base Processor
+
+        - hasHateWords(dat []byte) bool
+
+        + Process(dat []byte) ([]byte, error)
+
+    }
+}
+
+"decorator.Processor" <|-- "decorator.ChkDirtyWordsProcessor"
+"decorator.Processor" <|-- "decorator.ChkTypoProcessor"
+"decorator.Processor" <|-- "decorator.articleProcessor"
+"decorator.Processor" <|-- "decorator.perfectArticleProcessor"
+
+"decorator.articleProcessor" ..> "decorator.Options"
+"decorator.perfectArticleProcessor" ..> "decorator.Options"
+
+@enduml
