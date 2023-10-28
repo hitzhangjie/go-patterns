@@ -1,6 +1,16 @@
-go 1.21.1
+go 1.21.0
 
 use (
+	./behavioral/10_visitor
+	./behavioral/1_chain_of_responsibility
+	./behavioral/2_iterator
+	./behavioral/3_memento
+	./behavioral/4_state
+	./behavioral/5_template_method
+	./behavioral/6_command
+	./behavioral/7_mediator
+	./behavioral/8_observer
+	./behavioral/9_strategy
 	./creational/1_factory
 	./creational/2_abstract_factory
 	./creational/3_builder
