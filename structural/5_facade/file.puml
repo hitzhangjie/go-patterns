@@ -1,0 +1,33 @@
+@startuml
+namespace facade {
+    class BitrateCalculator << (S,Aquamarine) >> {
+        + Calculate(resolution string) (int, error)
+
+    }
+    class Codec << (S,Aquamarine) >> {
+        + Decode(format string) error
+        + ReduceFrameRate(fps int) error
+        + AdjustBitrate(br int) error
+        + Encode(format string) error
+
+    }
+    class VideoConverter << (S,Aquamarine) >> {
+        - file *VideoFile
+        - codec *Codec
+        - calc *BitrateCalculator
+
+        + Convert(fileName string, resolution string, format string) error
+
+    }
+    class VideoFile << (S,Aquamarine) >> {
+        + Load(fileName string) error
+        + CheckFormat(fileName string) error
+
+    }
+}
+
+"facade.VideoConverter" ..> "facade.VideoFile"
+"facade.VideoConverter" ..> "facade.Codec"
+"facade.VideoConverter" ..> "facade.BitrateCalculator"
+
+@enduml
