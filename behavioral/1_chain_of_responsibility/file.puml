@@ -1,0 +1,44 @@
+@startuml
+namespace chain_of_responsibility {
+    class Article << (S,Aquamarine) >> {
+        + Title string
+        + Content string
+        + Author string
+        + Date time.Time
+
+        + String() string
+
+    }
+    interface Handler  {
+        + Handle( *Article) error
+        + SetNext( Handler) 
+
+    }
+    class baseHandler << (S,Aquamarine) >> {
+        - next Handler
+
+        + Handle(article *Article) error
+        + SetNext(hh Handler) 
+
+    }
+    class checkAuthorProcessor << (S,Aquamarine) >> {
+        + Handle(article *Article) error
+
+    }
+    class checkDirtyWordsProcessor << (S,Aquamarine) >> {
+        + Handle(article *Article) error
+
+    }
+    class formatProcessor << (S,Aquamarine) >> {
+        + Handle(article *Article) error
+
+    }
+}
+"chain_of_responsibility.baseHandler" *-- "chain_of_responsibility.checkAuthorProcessor"
+"chain_of_responsibility.baseHandler" *-- "chain_of_responsibility.checkDirtyWordsProcessor"
+"chain_of_responsibility.baseHandler" *-- "chain_of_responsibility.formatProcessor"
+
+"chain_of_responsibility.Handler" <|-- "chain_of_responsibility.baseHandler"
+"chain_of_responsibility.Handler" .up.> "chain_of_responsibility.Article"
+
+@enduml

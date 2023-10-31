@@ -24,20 +24,15 @@ Context:
    
 Solution: 
 
+    The Chain of Responsibility pattern addresses this by creating a chain of 
+    objects, each having a chance to handle the request. 
+    
     The Chain of Responsibility pattern is a behavioral design pattern that
     allows an object to pass a request along a chain of potential handlers 
     until the request is handled or reaches the end of the chain. This pattern
     promotes loose coupling between the sender and receiver of a request,
     providing flexibility in dynamically assigning responsibilities.
-
-    The Chain of Responsibility pattern addresses this by creating a chain of 
-    objects, each having a chance to handle the request. 
-    
-    The sender of the request is unaware of the objects in the chain and 
-    simply sends the request to the chain or the first object in the chain.
-
-
-    
+   
     The Chain of Responsibility pattern consists of three main components: 
     - Handler interface
       The Handler interface defines a common method for handling requests and 
@@ -47,6 +42,9 @@ Solution:
       whether to handle the request or pass it to the next handler in the chain. 
     - Client
       It creates the chain of handlers and sends requests to the first handler.
+
+    The Chain of Responsibility pattern addresses this by creating a chain of 
+    objects, each having a chance to handle the request. 
 
 Variants:
 
