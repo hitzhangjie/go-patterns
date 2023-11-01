@@ -21,9 +21,23 @@ func (b *baseButton) Press() {
 }
 
 func NewSaveButton() Button {
-	return &saveButton{}
+	b := &saveButton{}
+	b.Text = "Save"
+	return b
 }
 
 type saveButton struct {
 	baseButton
+	Text string
+}
+
+type closeButton struct {
+	baseButton
+	Text string
+}
+
+func NewCloseButton() Button {
+	b := &closeButton{}
+	b.Text = "Close"
+	return b
 }

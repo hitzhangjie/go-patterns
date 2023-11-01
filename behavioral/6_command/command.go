@@ -7,8 +7,7 @@ type Command interface {
 }
 
 func NewSaveCommand() Command {
-	c := &saveCommand{}
-	c.f = getCurrentOpenFileDOM()
+	c := &saveCommand{f: getCurrentOpenFileDOM()}
 	return c
 }
 
@@ -17,17 +16,35 @@ type saveCommand struct {
 }
 
 func (c *saveCommand) Execute() error {
-	fmt.Println("get the receiver `f` which will do the task")
+	fmt.Println("the receiver `f` which will do the task")
 	return c.f.save()
 }
 
 type file struct{}
 
 func (d *file) save() error {
-	fmt.Println("file save the file")
+	fmt.Println("receiver save the file")
+	return nil
+}
+
+func (d *file) close() error {
+	fmt.Println("receiver close the file")
 	return nil
 }
 
 func getCurrentOpenFileDOM() *file {
 	return &file{}
+}
+
+type closeCommand struct {
+	f *file
+}
+
+func (c *closeCommand) Execute() error {
+	fmt.Println("the receiver `f` which will do the task")
+	return c.f.close()
+}
+
+func NewCloseCommand() Command {
+	return &closeCommand{f: getCurrentOpenFileDOM()}
 }
