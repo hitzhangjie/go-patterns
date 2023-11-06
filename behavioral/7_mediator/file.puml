@@ -1,0 +1,37 @@
+@startuml
+namespace mediator {
+    class Customer << (S,Aquamarine) >> {
+        - sequence int
+
+        + Name string
+
+        + Enter(mediator Mediator) 
+        + Leave(mediator Mediator) 
+
+    }
+    interface Mediator  {
+        + Enter( *Customer) bool
+        + Leave( *Customer) bool
+
+    }
+    class fittingRoom << (S,Aquamarine) >> {
+        - no int
+        - inUse bool
+        - customer *Customer
+
+    }
+    class fittingRoomMediator << (S,Aquamarine) >> {
+        + Rooms []*fittingRoom
+        + WaitingCustomers <font color=blue>chan</font> *Customer
+
+        + Enter(customer *Customer) bool
+        + Leave(customer *Customer) bool
+
+    }
+}
+
+"mediator.Mediator" <|-- "mediator.fittingRoomMediator"
+"mediator.fittingRoomMediator" "1" --> "n" "mediator.fittingRoom"
+"mediator.Customer" --> "mediator.Mediator"
+
+@enduml
