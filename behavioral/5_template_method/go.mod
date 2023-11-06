@@ -1,3 +1,3 @@
-module method
+module templatemethod
 
 go 1.21.0
