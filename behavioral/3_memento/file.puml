@@ -1,0 +1,31 @@
+@startuml
+namespace memento {
+    class Caretaker << (S,Aquamarine) >> {
+        - mementos []*Memento
+        - current int
+
+        + AddMemento(m *Memento) 
+        + Undo(originator *Originator) 
+        + Redo(originator *Originator) 
+
+    }
+    class Memento << (S,Aquamarine) >> {
+        - state string
+
+    }
+    class Originator << (S,Aquamarine) >> {
+        - state string
+
+        + SetState(state string) 
+        + GetState() string
+        + CreateMemento() *Memento
+        + RestoreMemento(m *Memento) 
+
+    }
+}
+
+"memento.Caretaker" "1" --> "n" "memento.Originator"
+"memento.Caretaker" "1" --> "m" "memento.Memento"
+"memento.Originator" --> "memento.Memento"
+
+@enduml
