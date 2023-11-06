@@ -1,17 +1,32 @@
 package mediator
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func TestMediator(t *testing.T) {
-	c1 := NewCustomer("zhang")
-	c2 := NewCustomer("yang")
-	c3 := NewCustomer("wang")
-
 	mediator := NewFittingRoomMediator(2)
-	c1.Enter(mediator)
-	c2.Enter(mediator)
-	c3.Enter(mediator)
-	c1.Leave(mediator)
-	c2.Leave(mediator)
-	c3.Leave(mediator)
+
+	c1 := NewCustomer("zhang").SetMediator(mediator)
+	c2 := NewCustomer("yang").SetMediator(mediator)
+	c3 := NewCustomer("wang").SetMediator(mediator)
+
+	ch := make(chan int, 2)
+	go func() {
+		c1.Enter()
+		c2.Enter()
+		c3.Enter()
+		ch <- 1
+	}()
+	go func() {
+		time.Sleep(time.Second * 5)
+		c1.Leave()
+		c2.Leave()
+		time.Sleep(time.Second * 5)
+		c3.Leave()
+		ch <- 1
+	}()
+	<-ch
+	<-ch
 }

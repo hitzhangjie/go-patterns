@@ -2,73 +2,122 @@ package mediator
 
 import (
 	"fmt"
+	"sync"
 	"sync/atomic"
+	"time"
 )
 
 type Mediator interface {
-	Enter(*Customer) bool
-	Leave(*Customer) bool
+	Wait(*Customer) <-chan *FittingRoom
+	Enter(*Customer)
+	Leave(*Customer)
 }
 
-type fittingRoom struct {
+const (
+	idle = iota
+	reserved
+	inused
+)
+
+type FittingRoom struct {
 	no       int
-	inUse    bool
+	state    int
 	customer *Customer
+	last     time.Time
 }
 
-func NewFittingRoomMediator(numOfRooms int) *fittingRoomMediator {
-	rooms := make([]*fittingRoom, numOfRooms)
-	for i := 0; i < numOfRooms; i++ {
-		rooms[i] = &fittingRoom{
+// NewFittingRoomMediator create a mediator who manages `cap` fitting rooms
+func NewFittingRoomMediator(cap int) *fittingRoomMediator {
+	rooms := make([]*FittingRoom, cap)
+	for i := 0; i < cap; i++ {
+		rooms[i] = &FittingRoom{
 			no:       i + 1,
-			inUse:    false,
+			state:    idle,
 			customer: nil,
 		}
 	}
 	m := &fittingRoomMediator{
 		Rooms:            rooms,
-		WaitingCustomers: make(chan *Customer, 64),
+		WaitingCustomers: make(chan *waiter, 64),
 	}
 	return m
 }
 
 type fittingRoomMediator struct {
-	Rooms            []*fittingRoom
-	WaitingCustomers chan *Customer
+	sync.Mutex
+	Rooms []*FittingRoom
+
+	WaitingCustomers chan *waiter
 }
 
-func (m *fittingRoomMediator) Enter(customer *Customer) bool {
+type waiter struct {
+	*Customer
+	ch chan *FittingRoom
+}
+
+func (m *fittingRoomMediator) Wait(customer *Customer) <-chan *FittingRoom {
+	m.Lock()
+	defer m.Unlock()
+
+	ch := make(chan *FittingRoom, 1)
 	for _, room := range m.Rooms {
-		if !room.inUse {
-			room.inUse = true
+		if room.state == idle ||
+			(room.state == reserved && time.Since(room.last) > time.Minute*5) {
+			room.state = reserved
 			room.customer = customer
-			fmt.Printf("%s enter room-%d\n", customer.Name, room.no)
-			return true
+			room.last = time.Now()
+			ch <- room
+			return ch
 		}
 	}
-	fmt.Printf("%s wait idle rooms\n", customer.Name)
-	m.WaitingCustomers <- customer
-	return false
+
+	m.WaitingCustomers <- &waiter{Customer: customer, ch: ch}
+	return ch
 }
 
-func (m *fittingRoomMediator) Leave(customer *Customer) bool {
+func (m *fittingRoomMediator) Enter(customer *Customer) {
+	m.Lock()
+	defer m.Unlock()
+
 	for _, room := range m.Rooms {
-		if room.customer == nil {
+		if room.state != reserved {
 			continue
 		}
 		if room.customer.sequence == customer.sequence {
-			room.inUse = false
+			room.state = inused
+			room.last = time.Now()
+			return
+		}
+	}
+	fmt.Printf("%s no reserved room found\n", customer.Name)
+}
+
+func (m *fittingRoomMediator) Leave(customer *Customer) {
+	m.Lock()
+	defer m.Unlock()
+
+	for _, room := range m.Rooms {
+		if room.state != inused {
+			continue
+		}
+		if room.customer.sequence == customer.sequence {
+			room.state = idle
 			room.customer = nil
-			fmt.Printf("%s leave room-%d\n", customer.Name, room.no)
+			room.last = time.Now()
+			fmt.Printf("%s will leave room-%d\n", customer.Name, room.no)
 			// let next waiting customer enter
 			select {
-			case nextCustomer := <-m.WaitingCustomers:
-				m.Enter(nextCustomer)
+			case waiter := <-m.WaitingCustomers:
+				fmt.Printf("%s will be notified to use room-%d\n", waiter.Name, room.no)
+				room.state = reserved
+				room.customer = waiter.Customer
+				room.last = time.Now()
+				waiter.ch <- room
+				close(waiter.ch)
 			default:
 			}
 		}
 	}
-	return true
 }
 
 var sequence atomic.Int64
@@ -83,12 +132,27 @@ func NewCustomer(name string) *Customer {
 type Customer struct {
 	Name     string
 	sequence int
+	mediator Mediator
 }
 
-func (c *Customer) Enter(mediator Mediator) {
-	mediator.Enter(c)
+func (c *Customer) SetMediator(m Mediator) *Customer {
+	c.mediator = m
+	return c
 }
 
-func (c *Customer) Leave(mediator Mediator) {
-	mediator.Leave(c)
+func (c *Customer) Enter() {
+	room, ok := <-c.mediator.Wait(c)
+	if !ok {
+		fmt.Printf("%s wait too long, it's best to quit\n", c.Name)
+		return
+	}
+	fmt.Printf("%s could use reserved room-%d\n", c.Name, room.no)
+
+	c.mediator.Enter(c)
+	fmt.Printf("%s now is using room-%d\n", c.Name, room.no)
+}
+
+func (c *Customer) Leave() {
+	c.mediator.Leave(c)
+	fmt.Printf("%s has left\n", c.Name)
 }
