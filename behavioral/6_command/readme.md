@@ -11,12 +11,12 @@ Context:
     Well, two bad things will occur:
     - you'll see soon you have to maintain too enormous number of subclasses,
       when you change the logic of base class of button, you may worried about
-      if it affect the behavior of all subclasses. That means your GUI code will become dependent on the volatile code of the business logc.
+      if it affect the behavior of all subclasses. That means your GUI code 
+      will become dependent on the volatile code of the business logc.
     - you may want to add shortcuts for different buttons for friendly 
-      accessibilit,. when you click the code, you may write some code in its
+      accessibility. when you click the code, you may write some code in its
       subclass. Now we want to add shortcuts, when shortcuts triggered, you
-      have to write or copy & paste the code there. You code will have
-      duplicate code.
+      have to copy & paste the duplicate code there.
 
     And besides, sometimes, you may want to lazily process the user request,
     so you may want to queue the actions of the player.
@@ -25,10 +25,10 @@ Context:
 
 Solution:
 
-    Command is a behavioral design pattern that turns a request into a
-    stand-alone object that contains all information about the request. This
-    transformation lets you pass requests as a method arguments, delay or queue
-    a request’s execution, and support undoable operations.
+    Command Pattern is a behavioral pattern that turns a request into a
+    standalone object that contains all information about the request. This
+    transformation lets you pass requests as a method arguments, delay or 
+    queue a request’s execution, and support undoable operations.
 
     And tcommand pattern is a way to separate the thing calling for a task from
     the thing doing the task.
