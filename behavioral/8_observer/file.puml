@@ -1,0 +1,41 @@
+@startuml
+namespace observer {
+    class Client << (S,Aquamarine) >> {
+        - name string
+
+        + Update(event WeatherChangeEvent) 
+
+    }
+    interface Observer  {
+        + Update(event WeatherChangeEvent) 
+
+    }
+    interface Subject  {
+        + RegisterObserver(observer Observer) 
+        + RemoveObserver(observer Observer) 
+        + NotifyObservers(event WeatherChangeEvent) 
+
+    }
+    class WeatherChangeEvent << (S,Aquamarine) >> {
+        + Temperature float64
+        + Humidity float64
+        + Pressure float64
+
+    }
+    class WeatherForecastServer << (S,Aquamarine) >> {
+        - observers []Observer
+
+        + RegisterObserver(observer Observer) 
+        + RemoveObserver(observer Observer) 
+        + NotifyObservers(event WeatherChangeEvent) 
+        + SetMeasurements(event WeatherChangeEvent) 
+
+    }
+}
+
+"observer.Observer" <|-- "observer.Client"
+"observer.Subject" <|-- "observer.WeatherForecastServer"
+"observer.Subject" -up-> "observer.WeatherChangeEvent"
+"observer.Observer" -up-> "observer.WeatherChangeEvent"
+
+@enduml
