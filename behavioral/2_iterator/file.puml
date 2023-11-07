@@ -1,0 +1,35 @@
+@startuml
+namespace iterator {
+    interface Iterator  {
+        + HasMore() bool
+        + Next() *Student
+
+    }
+    class Student << (S,Aquamarine) >> {
+        + Name string
+        + Age int
+
+        + String() string
+
+    }
+    class Team << (S,Aquamarine) >> {
+        + Students []*Student
+
+        + Iterator() Iterator
+
+    }
+    class sliceIterator << (S,Aquamarine) >> {
+        - offset int
+        - data []*Student
+
+        + HasMore() bool
+        + Next() *Student
+
+    }
+}
+
+"iterator.Iterator" <|-- "iterator.sliceIterator"
+"iterator.Iterator" --> "iterator.Student"
+"iterator.Team" --> "iterator.Iterator"
+
+@enduml

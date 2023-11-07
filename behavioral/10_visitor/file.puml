@@ -1,0 +1,39 @@
+@startuml
+namespace visitor {
+    class AreaVisitor << (S,Aquamarine) >> {
+        + Visit(shape Shape) 
+
+    }
+    class Circle << (S,Aquamarine) >> {
+        - radius float64
+
+        + Accept(v Visitor) 
+
+    }
+    class PerimeterVisitor << (S,Aquamarine) >> {
+        + Visit(shape Shape) 
+
+    }
+    interface Shape  {
+        + Accept( Visitor) 
+
+    }
+    class Square << (S,Aquamarine) >> {
+        - side float64
+
+        + Accept(v Visitor) 
+
+    }
+    interface Visitor  {
+        + Visit( Shape) 
+
+    }
+}
+
+"visitor.Visitor" <|-- "visitor.AreaVisitor"
+"visitor.Shape" <|-- "visitor.Circle"
+"visitor.Visitor" <|-- "visitor.PerimeterVisitor"
+"visitor.Shape" <|-- "visitor.Square"
+"visitor.Visitor" --> "visitor.Shape"
+
+@enduml

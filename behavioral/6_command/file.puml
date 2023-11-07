@@ -1,0 +1,57 @@
+@startuml
+namespace command {
+    interface Button  {
+        + Bind( Command) 
+        + Press() 
+
+    }
+    interface Command  {
+        + Execute() error
+
+    }
+    class baseButton << (S,Aquamarine) >> {
+        - command Command
+
+        + Bind(cmd Command) 
+        + Press() 
+
+    }
+    class closeButton << (S,Aquamarine) >> {
+        + Text string
+
+    }
+    class closeCommand << (S,Aquamarine) >> {
+        - f *file
+
+        + Execute() error
+
+    }
+    class file << (S,Aquamarine) >> {
+        - save() error
+        - close() error
+
+    }
+    class saveButton << (S,Aquamarine) >> {
+        + Text string
+
+    }
+    class saveCommand << (S,Aquamarine) >> {
+        - f *file
+
+        + Execute() error
+
+    }
+}
+"command.Button" "1" --> "1" "command.Command"
+
+"command.baseButton" *-- "command.closeButton"
+"command.baseButton" *-- "command.saveButton"
+
+"command.Button" <|-- "command.baseButton"
+"command.Command" <|-- "command.closeCommand"
+"command.Command" <|-- "command.saveCommand"
+
+"command.saveCommand" --> "command.file"
+"command.closeCommand" --> "command.file"
+
+@enduml

@@ -2,36 +2,48 @@
 namespace mediator {
     class Customer << (S,Aquamarine) >> {
         - sequence int
+        - mediator Mediator
 
         + Name string
 
-        + Enter(mediator Mediator) 
-        + Leave(mediator Mediator) 
+        + SetMediator(m Mediator) *Customer
+        + Enter() 
+        + Leave() 
+
+    }
+    class FittingRoom << (S,Aquamarine) >> {
+        - no int
+        - state int
+        - customer *Customer
+        - last time.Time
 
     }
     interface Mediator  {
-        + Enter( *Customer) bool
-        + Leave( *Customer) bool
-
-    }
-    class fittingRoom << (S,Aquamarine) >> {
-        - no int
-        - inUse bool
-        - customer *Customer
+        + Wait( *Customer) <font color=blue>chan</font> *FittingRoom
+        + Enter( *Customer) 
+        + Leave( *Customer) 
 
     }
     class fittingRoomMediator << (S,Aquamarine) >> {
-        + Rooms []*fittingRoom
-        + WaitingCustomers <font color=blue>chan</font> *Customer
+        + Rooms []*FittingRoom
+        + WaitingCustomers <font color=blue>chan</font> *waiter
 
-        + Enter(customer *Customer) bool
-        + Leave(customer *Customer) bool
+        + Wait(customer *Customer) <font color=blue>chan</font> *FittingRoom
+        + Enter(customer *Customer) 
+        + Leave(customer *Customer) 
+
+    }
+    class waiter << (S,Aquamarine) >> {
+        - ch <font color=blue>chan</font> *FittingRoom
 
     }
 }
+"mediator.Customer" "1" --> "1" "mediator.Mediator"
+
+"mediator.Customer" *-- "mediator.waiter"
+"mediator.Mediator" "1" -right-> "n" "mediator.FittingRoom"
 
 "mediator.Mediator" <|-- "mediator.fittingRoomMediator"
-"mediator.fittingRoomMediator" "1" --> "n" "mediator.fittingRoom"
-"mediator.Customer" --> "mediator.Mediator"
+"mediator.fittingRoomMediator" -up-> "mediator.waiter"
 
 @enduml

@@ -8,10 +8,10 @@ import (
 func TestTemplateMethod(t *testing.T) {
 
 	fmt.Println("----- financial report -----")
-	r1 := &FinancialReport{&Report{}}
+	r1 := NewFinancialReport()
 	GenerateReport(r1)
 
 	fmt.Println("----- education report -----")
-	r2 := &EducationReport{&Report{}}
+	r2 := NewEducationReport()
 	GenerateReport(r2)
 }

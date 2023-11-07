@@ -1,0 +1,44 @@
+@startuml
+namespace state {
+    class HasSelectionState << (S,Aquamarine) >> {
+        + InsertCoin() 
+        + SelectItem() 
+        + DispenseItem() 
+
+    }
+    class NoSelectionState << (S,Aquamarine) >> {
+        + InsertCoin() 
+        + SelectItem() 
+        + DispenseItem() 
+
+    }
+    class SoldState << (S,Aquamarine) >> {
+        + InsertCoin() 
+        + SelectItem() 
+        + DispenseItem() 
+
+    }
+    interface State  {
+        + InsertCoin() 
+        + SelectItem() 
+        + DispenseItem() 
+
+    }
+    class VendingMachine << (S,Aquamarine) >> {
+        - currentState State
+
+        + SetState(state State) 
+        + InsertCoin() 
+        + SelectItem() 
+        + DispenseItem() 
+
+    }
+}
+
+"state.State" <|-- "state.HasSelectionState"
+"state.State" <|-- "state.NoSelectionState"
+"state.State" <|-- "state.SoldState"
+' "state.State" <|-- "state.VendingMachine"
+"state.VendingMachine" --> "state.State"
+
+@enduml

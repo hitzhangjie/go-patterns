@@ -21,7 +21,7 @@ type Reporter interface {
 }
 
 // Abstract base class
-type Report struct {
+type baseReport struct {
 }
 
 // Template method that calls steps
@@ -34,26 +34,30 @@ func GenerateReport(rr Reporter) {
 }
 
 // Base class steps implemented
-func (r *Report) initializeReport() {
+func (r *baseReport) initializeReport() {
 	fmt.Println("Initializing report...")
 }
 
-func (r *Report) collectData() {
+func (r *baseReport) collectData() {
 	fmt.Println("Collecting data...")
 }
 
-func (r *Report) analyze() {
+func (r *baseReport) analyze() {
 	fmt.Println("Analyzing report data...")
 }
 
-func (r *Report) finalize() {
+func (r *baseReport) finalize() {
 	fmt.Println("Finalizing report...")
 }
 
 // Hook method for customization
-func (r *Report) finalReport() {
+func (r *baseReport) finalReport() {
 	// Default implementation
 	fmt.Println("Generating final report")
+}
+
+func NewFinancialReport() Reporter {
+	return &FinancialReport{&baseReport{}}
 }
 
 // Concrete sub-class
@@ -63,12 +67,16 @@ type FinancialReport struct {
 
 // Override finalize method
 func (f *FinancialReport) finalize() {
-	fmt.Println("Finanical finalize")
+	fmt.Println("💲Finanical finalize")
 }
 
 // Override hook method
 func (f *FinancialReport) finalReport() {
-	fmt.Println("Generating financial report")
+	fmt.Println("💲Generating financial report")
+}
+
+func NewEducationReport() Reporter {
+	return &EducationReport{&baseReport{}}
 }
 
 // Concrete sub-class
@@ -78,10 +86,10 @@ type EducationReport struct {
 
 // Override finalize method
 func (r *EducationReport) finalize() {
-	fmt.Println("Education finalize")
+	fmt.Println("📚 Education finalize")
 }
 
 // Override hook method
 func (r *EducationReport) finalReport() {
-	fmt.Println("Generating education report")
+	fmt.Println("📚 Generating education report")
 }

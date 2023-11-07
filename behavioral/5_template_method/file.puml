@@ -1,0 +1,35 @@
+@startuml
+namespace templatemethod {
+    class EducationReport << (S,Aquamarine) >> {
+        - finalize() 
+        - finalReport() 
+
+    }
+    class FinancialReport << (S,Aquamarine) >> {
+        - finalize() 
+        - finalReport() 
+
+    }
+    interface Reporter  {
+        - initializeReport() 
+        - collectData() 
+        - analyze() 
+        - finalize() 
+        - finalReport() 
+
+    }
+    class baseReport << (S,Aquamarine) >> {
+        - initializeReport() 
+        - collectData() 
+        - analyze() 
+        - finalize() 
+        - finalReport() 
+
+    }
+}
+"templatemethod.Reporter" *-- "templatemethod.EducationReport"
+"templatemethod.Reporter" *-- "templatemethod.FinancialReport"
+
+"templatemethod.Reporter" <|-- "templatemethod.baseReport"
+
+@enduml
