@@ -1,0 +1,51 @@
+@startuml
+namespace flyweight {
+    class Circle << (S,Aquamarine) >> {
+        + Color Color
+        + Radius float64
+        + LineWeight float64
+
+        + Draw(pos Pos) 
+
+    }
+    class Particle << (S,Aquamarine) >> {
+        - color Color
+
+        + Draw(pos Pos) 
+
+    }
+    class ParticleFactory << (S,Aquamarine) >> {
+        - particles <font color=blue>map</font>[Color]*Particle
+
+        + GetParticle(c Color) *Particle
+
+    }
+    class Point << (S,Aquamarine) >> {
+        + X float64
+        + LineWeight float64
+
+        + Draw(pos Pos) 
+
+    }
+    class Pos << (S,Aquamarine) >> {
+        + X float64
+
+    }
+    interface Shape  {
+        + Draw(pos Pos) 
+
+    }
+    class flyweight.Color << (T, #FF7700) >>  {
+    }
+}
+"flyweight.Particle" "1" *-- "n" "flyweight.Point": draw `Point` means\ndraw multiple `Particles`
+
+"flyweight.Shape" <|-- "flyweight.Circle"
+"flyweight.Shape" <|-- "flyweight.Particle"
+"flyweight.Shape" <|-- "flyweight.Point" 
+"flyweight.Shape" -up-> "flyweight.Pos"
+"flyweight.Circle" "1" --> "n" "flyweight.Point": draw `Circle` means\ndraw multiple `Point`
+"flyweight.ParticleFactory" "1" -left-> "n" "flyweight.Particle"
+
+"__builtin__.string" #.. "flyweight.Color"
+@enduml

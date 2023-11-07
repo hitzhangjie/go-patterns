@@ -1,0 +1,86 @@
+@startuml
+namespace proxy {
+    interface Client  {
+        + Call(ctx context.Context, method string, req []byte) ([]byte, error)
+
+    }
+    class ClientProxy << (S,Aquamarine) >> {
+        + Hello(ctx context.Context, req []byte) ([]byte, error)
+
+    }
+    interface Codec  {
+        + Encode(body []byte) ([]byte, error)
+        + Decode(pkg []byte) ([]byte, error)
+
+    }
+    interface LoadBalancer  {
+        + Select(nodes []Node) (Node, error)
+
+    }
+    interface Logger  {
+        + Debug(msg string, args ...<font color=blue>interface</font>{}) 
+
+    }
+    interface NamingService  {
+        + Register(ctx context.Context, service string, addr net.Addr) error
+        + List(ctx context.Context, service string) ([]Node, error)
+
+    }
+    class Node << (S,Aquamarine) >> {
+        + Addr string
+        + Proto string
+        + Codec string
+
+    }
+    class SysLogger << (S,Aquamarine) >> {
+        - tag string
+        - addr string
+        - writer *syslog.Writer
+        - ch <font color=blue>chan</font> string
+        - count atomic.Int32
+
+        - report() 
+
+        + Debug(msg string, args ...<font color=blue>interface</font>{}) 
+
+    }
+    class client << (S,Aquamarine) >> {
+        - service string
+        - naming NamingService
+        - balancer LoadBalancer
+        - codec Codec
+
+        + Call(ctx context.Context, method string, req []byte) ([]byte, error)
+
+    }
+    class randomLoadBalancer << (S,Aquamarine) >> {
+        + Select(nodes []Node) (Node, error)
+
+    }
+    class simpleCodec << (S,Aquamarine) >> {
+        + Encode(body []byte) ([]byte, error)
+        + Decode(dat []byte) ([]byte, error)
+
+    }
+    class simpleNamingService << (S,Aquamarine) >> {
+        + Register(ctx context.Context, service string, addr net.Addr) error
+        + List(ctx context.Context, service string) ([]Node, error)
+
+    }
+}
+"proxy.Client" *-up- "proxy.ClientProxy"
+
+"proxy.Logger" <|-- "proxy.SysLogger"
+"proxy.Client" <|-- "proxy.client"
+"proxy.LoadBalancer" <|-- "proxy.randomLoadBalancer"
+"proxy.Codec" <|-- "proxy.simpleCodec"
+"proxy.NamingService" <|-- "proxy.simpleNamingService"
+
+"proxy.client" --> "proxy.NamingService"
+"proxy.client" --> "proxy.Logger"
+"proxy.client" --> "proxy.Codec"
+"proxy.client" --> "proxy.LoadBalancer"
+"proxy.LoadBalancer" "1" --> "n" "proxy.Node"
+"proxy.NamingService" "1" --> "n" "proxy.Node"
+
+@enduml
