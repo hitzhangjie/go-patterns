@@ -125,3 +125,17 @@ Now I think your answer will be definitely 100% Yes.
 
 go-patterns will aim to provide demos for design patterns and idioms in golang. Hope we could follow the design details of design patterns to quickly solve the recurring problems.
 
+## Read More
+
+This repo provides the description of common patterns and demos in Go. It's helpful to quickly understand the basic idea and sketch code of the pattern.
+
+There are many resources available that provide more detailed information about design patterns. You can refer to these resources if you wish to gain a deeper understanding.
+
+1. design patterns, https://refactoring.guru/design-patterns, 
+2. design patterns, https://sourcemaking.com/design_patterns
+3. go design patterns, recipes, idioms, https://github.com/tmrts/go-patterns
+
+Design patterns are patterns that are applicable to medium-scale scenarios. You can know more about Architecture Patterns and idioms of different Programming Languages.
+
+
+
