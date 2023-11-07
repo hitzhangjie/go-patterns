@@ -1,0 +1,95 @@
+@startuml
+namespace prototype {
+    interface Car  {
+        + Accelerate() 
+        + Brake() 
+        + Steer( Direction) 
+        + Clone() Car
+
+    }
+    interface Door  {
+        + Open() 
+        + Close() 
+        + Clone() Door
+
+    }
+    class Factory << (S,Aquamarine) >> {
+        + Create() Car
+
+    }
+    interface Frame  {
+        + OpenTheDoor() 
+        + CloseTheDoor() 
+        + Clone() Frame
+
+    }
+    interface Wheel  {
+        + Spin() 
+        + Brake() 
+        + Clone() Wheel
+
+    }
+    class car << (S,Aquamarine) >> {
+        + Frame Frame
+        + Wheels []Wheel
+
+        + Accelerate() 
+        + Brake() 
+        + Steer(_ Direction) 
+        + Clone() Car
+
+    }
+    class door << (S,Aquamarine) >> {
+        - vetexes []vertex
+
+        + Open() 
+        + Close() 
+        + Clone() Door
+
+    }
+    class frame << (S,Aquamarine) >> {
+        - doors []Door
+
+        + OpenTheDoor() 
+        + CloseTheDoor() 
+        + Clone() Frame
+
+    }
+    class prototype.Direction << (T, #FF7700) >>  {
+    }
+    class tire << (S,Aquamarine) >> {
+    }
+    class tube << (S,Aquamarine) >> {
+    }
+    class vertex << (S,Aquamarine) >> {
+        - x float32
+        - thickness float32
+
+    }
+    class wheel << (S,Aquamarine) >> {
+        - tire *tire
+        - tube *tube
+
+        + Spin() 
+        + Brake() 
+        + Clone() Wheel
+
+    }
+}
+
+"prototype.Car" <|-- "prototype.car"
+"prototype.Door" <|-- "prototype.door"
+"prototype.door" --> "prototype.vertex"
+"prototype.Frame" <|-- "prototype.frame"
+"prototype.Wheel" <|-- "prototype.wheel"
+"prototype.wheel" --> "prototype.tire"
+"prototype.wheel" --> "prototype.tube"
+
+"prototype.Car" --> "prototype.Frame"
+"prototype.Car" "1" --> "4" "prototype.Wheel"
+"prototype.Car" "1" --> "2 or 4" "prototype.Door"
+
+"prototype.Factory" --> "prototype.Car"
+
+"__builtin__.int" #.. "prototype.Direction"
+@enduml
