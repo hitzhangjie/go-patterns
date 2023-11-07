@@ -137,5 +137,7 @@ There are many resources available that provide more detailed information about 
 
 Design patterns are patterns that are applicable to medium-scale scenarios. You can know more about Architecture Patterns and idioms of different Programming Languages.
 
-
+Also, thanks to the following which helps to create the UML diagrams:
+- goplantuml generats `file.puml`, https://github.com/jfeliu007/goplantuml
+- plantuml syntax, https://plantuml.com/class-diagram
 
