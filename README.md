@@ -1,6 +1,6 @@
 # README
 
-[TOC]
+[toc]
 
 ## Introduction
 
@@ -15,7 +15,7 @@ We must think about the following questions before we dive into the demos, it is
 - Criticism of patterns?
 - Classification of patterns?
 - etc.
- 
+
 ## What's a pattern?
 
 Pattern is a solution, which works well in practices, to a commonly reoccurring problems. Patterns could be created and shared in every area, like building body, improving representation skills, architecture skills, or software design.
@@ -26,7 +26,7 @@ With the help of patterns, novices will work better as if they were (or almost a
 
 ## What makes a pattern?
 
-A pattern for software architecture describes a particular recurring design problem that arises in specific design contexts, and presents a well-proven generic scheme for its solution. The solution scheme is specified by describing its consitituent components, their responsibilities and relationships, and the ways in which they collaborate.  
+A pattern for software architecture describes a particular recurring design problem that arises in specific design contexts, and presents a well-proven generic scheme for its solution. The solution scheme is specified by describing its consitituent components, their responsibilities and relationships, and the ways in which they collaborate.
 
 See: Pattern-Oriented Software Architecture, Volume 1, Page 8~11.
 
@@ -36,42 +36,45 @@ See: Pattern-Oriented Software Architecture, Volume 1, Page 8~11.
 
 ## Pattern Categories
 
-In software design area, patterns could be split into different layers. 
+In software design area, patterns could be split into different layers.
 
-A closer look at existing patterns reveals that they cover various ranges of scale and abstraction. 
-- Some patterns help in structuring a software system into subsystems. 
-- Other patterns support the refinement of subsystems and components, or of the relationships between them. 
+A closer look at existing patterns reveals that they cover various ranges of scale and abstraction.
+
+- Some patterns help in structuring a software system into subsystems.
+- Other patterns support the refinement of subsystems and components, or of the relationships between them.
 - Further patterns help in implementing particular design aspects in a specific programming language.
 
 Patterns also range from domain-independent ones, such as those for decoupling interacting components, to patterns addressing domain-specific aspects such as transaction policies in business applications, or call routing in telecommunication.
 
 To refine our classification, we group patterns into three categories:
 
-- Architecture Patterns  
-  Viable software architectures are built according to some overall structuring principle. We describe these principles with architectural patterns.  
-  >A architectural pattern expresses a fundamental structural organization schema for software systems. It provides a set of predefined subsystems, specifies their responsibilities, and includes rules and guidelines for organizing the relationships between them.  
-  
+- Architecture PatternsViable software architectures are built according to some overall structuring principle. We describe these principles with architectural patterns.
+
+  > A architectural pattern expresses a fundamental structural organization schema for software systems. It provides a set of predefined subsystems, specifies their responsibilities, and includes rules and guidelines for organizing the relationships between them.
+  >
+
   Architectural patterns are templates for concrete software architectures. They specify the system-wide structual properties of an application, and have an impact on the architecture of its subsystems. The selection of an architecture pattern is therefore a fundamental design decision when developing a software system.
-  
-- Design Patterns 
+- Design Patterns
   The subsystems of a software architecture, as well as the relationships between them, usually consist of several smaller architectural units. We describe these using design patterns.
-  >A design pattern provides a scheme for refining the subsystems or components of a software system, or the relationships between them. It describes a commonly-recurring structure of communicating components that solves a general design problem within a particular context.
-  
-  Design patterns are medium-scale patterns. They are smaller in scale than architectural patterns, but tend to be independent of a particular programming language or programming paradigm. The application of a design pattern has no effect on the fundamental structure of a software system, but may have a strong influence on the architecture of a subsystem.  
-  Many design patterns provides structures for decomposing more complex services or components. Others address the effective cooperation between them, such as the following pattern: Observer or Publisher-Subscriber.
-   
+
+  > A design pattern provides a scheme for refining the subsystems or components of a software system, or the relationships between them. It describes a commonly-recurring structure of communicating components that solves a general design problem within a particular context.
+  >
+
+  Design patterns are medium-scale patterns. They are smaller in scale than architectural patterns, but tend to be independent of a particular programming language or programming paradigm. The application of a design pattern has no effect on the fundamental structure of a software system, but may have a strong influence on the architecture of a subsystem.Many design patterns provides structures for decomposing more complex services or components. Others address the effective cooperation between them, such as the following pattern: Observer or Publisher-Subscriber.
 - Idioms
   Idioms deal with the implemention of particular design issues.
-  >An idiom is a low-level pattern specific to a programming language. An idiom describes how to implement particular aspects of components or the relationships between them using the features of the given language.
-  
-  Idiom represent the lowest-level patterns. They address aspects of both design and implemention.  
+
+  > An idiom is a low-level pattern specific to a programming language. An idiom describes how to implement particular aspects of components or the relationships between them using the features of the given language.
+  >
+
+  Idiom represent the lowest-level patterns. They address aspects of both design and implemention.
   Most idioms are language-specific, they capture existing programming experience. Often the same idiom looks different for different languages, and sometimes an idiom that is useful for one programming language doesn't make sense in another.
 
 ## Relationships between Patterns
 
 A pattern solves a particular problem, but its application may raise new problems. Some of these can be solved by other patterns.
 
-Most patterns for software architecture raise problems that can be solved by smaller patterns. Patterns do not usually exist in isolation. Each pattern depends on the smaller patterns it contains and on the larger patterns in which it is contained. 
+Most patterns for software architecture raise problems that can be solved by smaller patterns. Patterns do not usually exist in isolation. Each pattern depends on the smaller patterns it contains and on the larger patterns in which it is contained.
 
 And a pattern may also be a variant of another.
 
@@ -82,9 +85,8 @@ Patterns can also combine in more complex structures at the same level of abstra
 Patterns must be presented in an appropriate form if we are to understand and discuss them. A good description helps us grasp the essense of a pattern immediately:
 
 - what's the problem the pattern addresses?
-- what's the proposed solution?  
-  A good description also provides us with all the details necessary to implement a pattern, and to consider the consequences of its application.
-- describe the solution uniformly!  
+- what's the proposed solution?A good description also provides us with all the details necessary to implement a pattern, and to consider the consequences of its application.
+- describe the solution uniformly!
   This helps us to compare one pattern with another, especially when we are looking for alternative solutions to a problem.
 
 The basic Context-Prolem-Solution structure provides a good starting point for a description format, but it is not enough.
@@ -131,13 +133,13 @@ This repo provides the description of common patterns and demos in Go. It's help
 
 There are many resources available that provide more detailed information about design patterns. You can refer to these resources if you wish to gain a deeper understanding.
 
-1. design patterns, https://refactoring.guru/design-patterns, 
+1. design patterns, https://refactoring.guru/design-patterns,
 2. design patterns, https://sourcemaking.com/design_patterns
 3. go design patterns, recipes, idioms, https://github.com/tmrts/go-patterns
 
 Design patterns are patterns that are applicable to medium-scale scenarios. You can know more about Architecture Patterns and idioms of different Programming Languages.
 
 Also, thanks to the following which helps to create the UML diagrams:
+
 - goplantuml generats `file.puml`, https://github.com/jfeliu007/goplantuml
 - plantuml syntax, https://plantuml.com/class-diagram
-

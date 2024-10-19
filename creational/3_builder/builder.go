@@ -50,5 +50,6 @@ func (b *builder) BuildFloor(pos []Pos, style MaterialStyle) *builder {
 }
 
 func (b *builder) Build() House {
+	// some other building stuffs
 	return b.house
 }

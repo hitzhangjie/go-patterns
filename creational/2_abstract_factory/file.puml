@@ -9,9 +9,9 @@ package "abstract_factory" {
 }
 
 
-	abstract_factory.IFactory ..> abstract_factory.IProductA : <<return>> 
-	abstract_factory.IFactory ..> abstract_factory.IProductB : <<return>> 
-	abstract_factory.IFactory ..> abstract_factory.Style : <<return>> 
+	'abstract_factory.IFactory ..> abstract_factory.IProductA : <<return>> 
+	'abstract_factory.IFactory ..> abstract_factory.IProductB : <<return>> 
+	'abstract_factory.IFactory ..> abstract_factory.Style : <<return>> 
 
 package "abstract_factory" {
 	interface "IProductA" as abstract_factory.IProductA {
@@ -41,12 +41,15 @@ package "abstract_factory" {
 		+CreateProductA(): abstract_factory.IProductA
 		+CreateProductB(): abstract_factory.IProductB
 	}
+	Style1Factory -right-> Style
+	Style1Factory -down-> abstract_factory.IProductA
+	Style1Factory -down-> abstract_factory.IProductB
 }
 
 
-	abstract_factory.Style1Factory ..> abstract_factory.Style : <<return>> 
-	abstract_factory.Style1Factory ..> abstract_factory.IProductA : <<return>> 
-	abstract_factory.Style1Factory ..> abstract_factory.IProductB : <<return>> 
+	'abstract_factory.Style1Factory ..> abstract_factory.Style : <<return>> 
+	'abstract_factory.Style1Factory ..> abstract_factory.IProductA : <<return>> 
+	'abstract_factory.Style1Factory ..> abstract_factory.IProductB : <<return>> 
 
 package "abstract_factory" {
 	class "Style1ProductA" as abstract_factory.Style1ProductA <<V,Orchid>> {
@@ -70,12 +73,15 @@ package "abstract_factory" {
 		+CreateProductA(): abstract_factory.IProductA
 		+CreateProductB(): abstract_factory.IProductB
 	}
+	Style2Factory -left-> Style
+	Style2Factory -down-> abstract_factory.IProductA
+	Style2Factory -down-> abstract_factory.IProductB
 }
 
 
-	abstract_factory.Style2Factory ..> abstract_factory.Style : <<return>> 
-	abstract_factory.Style2Factory ..> abstract_factory.IProductA : <<return>> 
-	abstract_factory.Style2Factory ..> abstract_factory.IProductB : <<return>> 
+	'abstract_factory.Style2Factory ..> abstract_factory.Style : <<return>> 
+	'abstract_factory.Style2Factory ..> abstract_factory.IProductA : <<return>> 
+	'abstract_factory.Style2Factory ..> abstract_factory.IProductB : <<return>> 
 
 package "abstract_factory" {
 	class "Style2ProductA" as abstract_factory.Style2ProductA <<V,Orchid>> {
@@ -108,9 +114,9 @@ package "abstract_factory" {
 }
 N_abstract_factory_Style --> abstract_factory.Style
 
-abstract_factory.Style1Factory ..> abstract_factory.Style1ProductA
-abstract_factory.Style1Factory ..> abstract_factory.Style1ProductB
-abstract_factory.Style2Factory ..> abstract_factory.Style2ProductA
-abstract_factory.Style2Factory ..> abstract_factory.Style2ProductB
+'abstract_factory.Style1Factory ..> abstract_factory.Style1ProductA
+'abstract_factory.Style1Factory ..> abstract_factory.Style1ProductB
+'abstract_factory.Style2Factory ..> abstract_factory.Style2ProductA
+'abstract_factory.Style2Factory ..> abstract_factory.Style2ProductB
 
 @enduml

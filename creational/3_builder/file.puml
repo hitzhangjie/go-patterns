@@ -46,9 +46,9 @@ package "builder" {
 	}
 }
 
-	builder.House --> builder.Floor
-	builder.House --> builder.Wall
-	builder.House --> builder.Roof
+	builder.House -down-> builder.Floor
+	builder.House -left-> builder.Wall
+	builder.House -right-> builder.Roof
 
 
 package "builder" {
@@ -71,19 +71,16 @@ package "builder" {
 	}
 }
 
-	builder.Orderer --> builder.builder
-	builder.Orderer --> builder.Floor
-	builder.Orderer --> builder.Wall
-	builder.Orderer --> builder.Window
-	builder.Orderer --> builder.Door
+	builder.Orderer -right-> builder.builder
+	' builder.Orderer --> builder.Floor
+	' builder.Orderer --> builder.Wall
+	' builder.Orderer --> builder.Window
+	' builder.Orderer --> builder.Door
 
-	builder.Orderer ..> builder.Pos : <<use>> 
-	builder.Orderer ..> builder.MaterialStyle : <<use>> 
-	builder.Orderer ..> builder.Pos : <<use>> 
-	builder.Orderer ..> builder.GlassStyle : <<use>> 
-	builder.Orderer ..> builder.Pos : <<use>> 
-	builder.Orderer ..> builder.ColorStyle : <<use>> 
-	builder.Orderer ..> builder.House : <<return>> 
+	' builder.Orderer ..> builder.Pos : <<use>> 
+	' builder.Orderer ..> builder.MaterialStyle : <<use>> 
+	' builder.Orderer ..> builder.GlassStyle : <<use>> 
+	' builder.Orderer ..> builder.ColorStyle : <<use>> 
 
 package "builder" {
 	class "Pos" as builder.Pos <<V,Orchid>> {
@@ -101,7 +98,7 @@ package "builder" {
 	}
 }
 
-	builder.Roof --> builder.RoofStyle
+	builder.Roof -down-> builder.RoofStyle
 
 
 package "builder" {
@@ -122,17 +119,11 @@ package "builder" {
 }
 
 	builder.Wall --> builder.Pos
-	builder.Wall --> builder.Window
-	builder.Wall --> builder.Door
-	builder.Wall --> builder.ColorStyle
-
-	builder.Wall ..> builder.Pos : <<use>> 
-	builder.Wall ..> builder.GlassStyle : <<use>> 
-	builder.Wall ..> builder.Wall : <<return>> 
-	builder.Wall ..> builder.Pos : <<use>> 
-	builder.Wall ..> builder.MaterialStyle : <<use>> 
-	builder.Wall ..> builder.ColorStyle : <<use>> 
-	builder.Wall ..> builder.Wall : <<return>> 
+	builder.Wall -left-> builder.Window
+	builder.Wall -right-> builder.Door
+	' builder.Wall ..> builder.GlassStyle : <<use>> 
+	' builder.Wall ..> builder.MaterialStyle : <<use>> 
+	' builder.Wall ..> builder.ColorStyle : <<use>> 
 
 package "builder" {
 	class "Window" as builder.Window <<V,Orchid>> {
@@ -158,17 +149,9 @@ package "builder" {
 }
 
 	builder.builder --> builder.House
-
-	builder.builder ..> builder.RoofStyle : <<use>> 
-	builder.builder ..> builder.builder : <<return>> 
-	builder.builder ..> builder.Pos : <<use>> 
-	builder.builder ..> builder.ColorStyle : <<use>> 
-	builder.builder ..> builder.Wall : <<return>> 
-	builder.builder ..> builder.Pos : <<use>> 
-	builder.builder ..> builder.MaterialStyle : <<use>> 
-	builder.builder ..> builder.builder : <<return>> 
-	builder.builder ..> builder.House : <<return>> 
-
-
+	' builder.builder ..> builder.Pos : <<use>> 
+	' builder.builder ..> builder.RoofStyle : <<use>> 
+	' builder.builder ..> builder.ColorStyle : <<use>> 
+	' builder.builder ..> builder.MaterialStyle : <<use>> 
 
 @enduml
