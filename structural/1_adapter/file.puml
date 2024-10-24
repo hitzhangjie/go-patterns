@@ -5,7 +5,7 @@ namespace adapter {
 
     }
     class PowerfulAnalyzer << (S,Aquamarine) >> {
-        + Visualize(dat []byte) error
+        + Analyze(dat []byte) error
 
     }
     class Record << (S,Aquamarine) >> {

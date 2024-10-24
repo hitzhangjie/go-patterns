@@ -8,7 +8,7 @@ import (
 type PowerfulAnalyzer struct {
 }
 
-func (_ *PowerfulAnalyzer) Visualize(dat []byte) error {
+func (_ *PowerfulAnalyzer) Analyze(dat []byte) error {
 	recs := []Record{}
 	if err := json.Unmarshal(dat, &recs); err != nil {
 		return fmt.Errorf("invalid JSON format: %v", err)

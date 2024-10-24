@@ -91,5 +91,5 @@ namespace prototype {
 
 "prototype.Factory" --> "prototype.Car"
 
-"__builtin__.int" #.. "prototype.Direction"
+' "__builtin__.int" #.. "prototype.Direction"
 @enduml

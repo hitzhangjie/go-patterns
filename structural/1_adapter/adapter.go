@@ -30,5 +30,5 @@ func (ja *jsonAnalyzerAdapter) Analyze(dat []byte) error {
 	}
 
 	// call wrapped ja.analyzer
-	return ja.analyzer.Visualize(dat)
+	return ja.analyzer.Analyze(dat)
 }

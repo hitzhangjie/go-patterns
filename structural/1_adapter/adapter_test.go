@@ -13,7 +13,7 @@ func TestAdapter(t *testing.T) {
 
 	// triggers an error because Analyzer only accepts JSON data
 	az := new(adapter.PowerfulAnalyzer)
-	require.Error(t, az.Visualize(xmldata))
+	require.Error(t, az.Analyze(xmldata))
 
 	// create an adapter to do this
 	adapter := adapter.NewJSONAnalyzerAdapter(az)
