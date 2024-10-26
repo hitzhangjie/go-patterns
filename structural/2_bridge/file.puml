@@ -5,6 +5,7 @@ namespace bridge {
 
     }
     class Circle << (S,Aquamarine) >> {
+        + MyColor Color
         + Radius int
 
         + Name() string
@@ -25,19 +26,14 @@ namespace bridge {
 
     }
     class Square << (S,Aquamarine) >> {
+        + MyColor Color
         + Edge int
 
         + Name() string
         + String() string
 
     }
-    class base << (S,Aquamarine) >> {
-        + Color Color
-
-    }
 }
-"bridge.base" *-- "bridge.Circle"
-"bridge.base" *-- "bridge.Square"
 
 "bridge.Color" <|-- "bridge.Blue"
 "bridge.Color" <|-- "bridge.Circle"

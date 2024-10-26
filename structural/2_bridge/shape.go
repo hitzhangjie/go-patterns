@@ -7,13 +7,9 @@ type Shape interface {
 	String() string
 }
 
-type base struct {
-	Color Color
-}
-
 type Square struct {
-	base
-	Edge int // centimiters
+	MyColor Color
+	Edge    int // centimiters
 }
 
 func (s Square) Name() string {
@@ -21,12 +17,12 @@ func (s Square) Name() string {
 }
 
 func (s Square) String() string {
-	return fmt.Sprintf("%s with edge=%dcm, rendered as %s", s.Name(), s.Edge, s.Color.String())
+	return fmt.Sprintf("%s with edge=%dcm, rendered as %s", s.Name(), s.Edge, s.MyColor.String())
 }
 
 type Circle struct {
-	base
-	Radius int // centimeters
+	MyColor Color
+	Radius  int // centimeters
 }
 
 func (c Circle) Name() string {
@@ -34,5 +30,5 @@ func (c Circle) Name() string {
 }
 
 func (c Circle) String() string {
-	return fmt.Sprintf("%s with edge=%dcm, rendered as %s", c.Name(), c.Radius, c.Color.String())
+	return fmt.Sprintf("%s with edge=%dcm, rendered as %s", c.Name(), c.Radius, c.MyColor.String())
 }
