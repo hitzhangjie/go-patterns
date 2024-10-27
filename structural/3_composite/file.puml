@@ -18,7 +18,6 @@ namespace composite {
     class folder << (S,Aquamarine) >> {
         - name string
         - size int
-        - mode int
         - files []File
 
         + Name() string

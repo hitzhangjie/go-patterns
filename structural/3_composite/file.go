@@ -11,10 +11,6 @@ type File interface {
 	Add(f File) error
 }
 
-func NewFolder(name string) File {
-	return &folder{name: name, size: 4 << 10}
-}
-
 func NewFile(name string, sz int) File {
 	return &file{name: name, size: sz}
 }
@@ -36,11 +32,13 @@ func (f *file) Add(file File) error {
 	return fmt.Errorf("%s isn't folder, cannot add file", f.name)
 }
 
-type folder struct {
-	name string
-	size int
-	mode int
+func NewFolder(name string) File {
+	return &folder{name: name, size: 4 << 10}
+}
 
+type folder struct {
+	name  string
+	size  int
 	files []File
 }
 
