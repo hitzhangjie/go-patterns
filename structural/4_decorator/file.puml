@@ -1,16 +1,8 @@
 @startuml
 namespace decorator {
-    class ChkDirtyWordsProcessor << (S,Aquamarine) >> {
-        + Process(dat []byte) ([]byte, error)
-
-    }
-    class ChkTypoProcessor << (S,Aquamarine) >> {
-        + Process(dat []byte) ([]byte, error)
-
-    }
     class Options << (S,Aquamarine) >> {
-        + ChkTypo bool
-        + ChkDirtyWords bool
+        - checkTypo bool
+        - checkDirtyWords bool
 
     }
     interface Processor  {
@@ -24,7 +16,15 @@ namespace decorator {
         + Process(dat []byte) ([]byte, error)
 
     }
-    class perfectArticleProcessor << (S,Aquamarine) >> {
+    class checkDirtyWordsProcessor << (S,Aquamarine) >> {
+        + Process(dat []byte) ([]byte, error)
+
+    }
+    class checkTypoProcessor << (S,Aquamarine) >> {
+        + Process(dat []byte) ([]byte, error)
+
+    }
+    class nohateArticleProcessor << (S,Aquamarine) >> {
         - base Processor
 
         - hasHateWords(dat []byte) bool
@@ -34,12 +34,14 @@ namespace decorator {
     }
 }
 
-"decorator.Processor" <|-- "decorator.ChkDirtyWordsProcessor"
-"decorator.Processor" <|-- "decorator.ChkTypoProcessor"
 "decorator.Processor" <|-- "decorator.articleProcessor"
-"decorator.Processor" <|-- "decorator.perfectArticleProcessor"
+"decorator.Processor" <|-- "decorator.checkDirtyWordsProcessor"
+"decorator.Processor" <|-- "decorator.checkTypoProcessor"
+"decorator.articleProcessor" .left.> "decorator.checkDirtyWordsProcessor"
+"decorator.articleProcessor" .right.> "decorator.checkTypoProcessor"
+"decorator.articleProcessor" -down-> "decorator.Options"
 
-"decorator.articleProcessor" ..> "decorator.Options"
-"decorator.perfectArticleProcessor" ..> "decorator.Options"
+"decorator.Processor" <|-- "decorator.nohateArticleProcessor"
+"decorator.nohateArticleProcessor" .up.> "decorator.articleProcessor"
 
 @enduml

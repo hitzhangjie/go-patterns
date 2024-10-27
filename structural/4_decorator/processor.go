@@ -27,31 +27,34 @@ func (p articleProcessor) Process(dat []byte) ([]byte, error) {
 }
 
 type Options struct {
-	ChkTypo       bool
-	ChkDirtyWords bool
+	checkTypo       bool
+	checkDirtyWords bool
 }
 
 func NewArticleProcessor(opt Options) Processor {
 	p := articleProcessor{
 		processors: []Processor{},
 	}
-	if opt.ChkTypo {
-		p.processors = append(p.processors, ChkTypoProcessor{})
+	if opt.checkTypo {
+		p.processors = append(p.processors, checkTypoProcessor{})
 	}
-	if opt.ChkDirtyWords {
-		p.processors = append(p.processors, ChkDirtyWordsProcessor{})
+	if opt.checkDirtyWords {
+		p.processors = append(p.processors, checkDirtyWordsProcessor{})
 	}
 	return p
 }
 
-type ChkTypoProcessor struct{}
+type checkTypoProcessor struct{}
 
-func (p ChkTypoProcessor) Process(dat []byte) ([]byte, error) {
+func (p checkTypoProcessor) Process(dat []byte) ([]byte, error) {
 	return dat, nil
 }
 
-type ChkDirtyWordsProcessor struct{}
+type checkDirtyWordsProcessor struct{}
 
-func (p ChkDirtyWordsProcessor) Process(dat []byte) ([]byte, error) {
+func (p checkDirtyWordsProcessor) Process(dat []byte) ([]byte, error) {
 	return dat, nil
 }
+
+// well, here there's no check hate words processor, which will be defined
+// when we want to decorate our articleProcessor in nohateArticleProcessor.

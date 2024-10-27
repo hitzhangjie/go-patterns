@@ -16,7 +16,7 @@ func TestArticleProcesso(t *testing.T) {
 	require.Nil(t, err)
 
 	// augmented processor
-	p2 := NewPerfectArticleProcessor(opts)
+	p2 := NewNoHateArticleProcessor(opts)
 	_, err = p2.Process([]byte(content))
 	require.NotNil(t, err)
 }
