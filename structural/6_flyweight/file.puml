@@ -2,10 +2,11 @@
 namespace flyweight {
     class Circle << (S,Aquamarine) >> {
         + Color Color
+        + Center Pos
         + Radius float64
         + LineWeight float64
 
-        + Draw(pos Pos) 
+        + Draw() 
 
     }
     class Particle << (S,Aquamarine) >> {
@@ -21,31 +22,32 @@ namespace flyweight {
 
     }
     class Point << (S,Aquamarine) >> {
-        + X float64
+        + Pos Pos
         + LineWeight float64
 
-        + Draw(pos Pos) 
+        + Draw() 
 
     }
     class Pos << (S,Aquamarine) >> {
         + X float64
+        + Y float64
 
     }
     interface Shape  {
-        + Draw(pos Pos) 
+        + Draw() 
 
     }
     class flyweight.Color << (T, #FF7700) >>  {
     }
 }
-"flyweight.Particle" "1" *-- "n" "flyweight.Point": draw `Point` means\ndraw multiple `Particles`
+
+"flyweight.ParticleFactory" -up-> "flyweight.Particle"
+"flyweight.Point" "1" -right-> "m" "flyweight.Particle"
+"flyweight.Circle" "1" -right-> "n" "flyweight.Point"
+"flyweight.Particle" -right-> "flyweight.Pos"
+"flyweight.Particle" --> "flyweight.Color"
 
 "flyweight.Shape" <|-- "flyweight.Circle"
-"flyweight.Shape" <|-- "flyweight.Particle"
-"flyweight.Shape" <|-- "flyweight.Point" 
-"flyweight.Shape" -up-> "flyweight.Pos"
-"flyweight.Circle" "1" --> "n" "flyweight.Point": draw `Circle` means\ndraw multiple `Point`
-"flyweight.ParticleFactory" "1" -left-> "n" "flyweight.Particle"
+"flyweight.Shape" <|-- "flyweight.Point"
 
-"__builtin__.string" #.. "flyweight.Color"
 @enduml
