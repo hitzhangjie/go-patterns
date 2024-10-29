@@ -28,6 +28,9 @@ func NewSysLogger(addr, tag string) (*SysLogger, error) {
 	}
 	l.writer = w
 	l.ch = make(chan string, 1024)
+
+	go l.report()
+
 	return l, nil
 }
 
@@ -57,12 +60,10 @@ func (l *SysLogger) report() {
 		// report every 5s or 100 log entries pending
 		select {
 		case <-ticker.C:
-			ticker.Reset(time.Second * 5)
 		default:
-		}
-
-		if l.count.Load() < 100 {
-			continue
+			if l.count.Load() < 100 {
+				continue
+			}
 		}
 
 		// report

@@ -1,0 +1,22 @@
+@startuml
+namespace proxy {
+    interface Logger  {
+        + Debug(msg string, args ...<font color=blue>interface</font>{}) 
+
+    }
+    class SysLogger << (S,Aquamarine) >> {
+        - tag string
+        - addr string
+        - writer *syslog.Writer
+        - ch <font color=blue>chan</font> string
+        - count atomic.Int32
+
+        - report() 
+
+        + Debug(msg string, args ...<font color=blue>interface</font>{}) 
+
+    }
+}
+"proxy.Logger" <|-- "proxy.SysLogger"
+
+@enduml
