@@ -21,11 +21,9 @@ func (h *baseHandler) Handle(article *Article) error {
 
 	// call next handler
 	if h.next == nil {
-		return nil
-	}
-
-	if err := h.next.Handle(article); err != nil {
-		return err
+		if err := h.next.Handle(article); err != nil {
+			return err
+		}
 	}
 
 	// postprocess
