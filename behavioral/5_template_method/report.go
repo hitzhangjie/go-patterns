@@ -3,16 +3,6 @@ package templatemethod
 import "fmt"
 
 type Reporter interface {
-	//mistake1: composition isn't inheritance, you can't overwritten the
-	//          base class method
-	//GenerateReport()
-	//
-	//mistake2: defines this method as interface method, it's weired by
-	//          calling `r.GenerateReport(rr)`, it works but weired.
-	//GenerateReport(rr Reporter)
-	//
-	// so, just define `GenerateReport(rr Reporter)` as the template method.
-
 	initializeReport()
 	collectData()
 	analyze()
@@ -24,7 +14,6 @@ type Reporter interface {
 type baseReport struct {
 }
 
-// Template method that calls steps
 func GenerateReport(rr Reporter) {
 	rr.initializeReport()
 	rr.collectData()
@@ -47,22 +36,20 @@ func (r *baseReport) analyze() {
 }
 
 func (r *baseReport) finalize() {
-	fmt.Println("Finalizing report...")
+	panic("not implemented")
 }
 
-// Hook method for customization
 func (r *baseReport) finalReport() {
-	// Default implementation
-	fmt.Println("Generating final report")
+	panic("not implemented")
 }
 
-func NewFinancialReport() Reporter {
-	return &FinancialReport{&baseReport{}}
+func NewFinancialReport() *FinancialReport {
+	return &FinancialReport{}
 }
 
 // Concrete sub-class
 type FinancialReport struct {
-	Reporter // Embedded Report
+	baseReport // Embedded Report
 }
 
 // Override finalize method
@@ -75,13 +62,13 @@ func (f *FinancialReport) finalReport() {
 	fmt.Println("💲Generating financial report")
 }
 
-func NewEducationReport() Reporter {
-	return &EducationReport{&baseReport{}}
+func NewEducationReport() *EducationReport {
+	return &EducationReport{}
 }
 
 // Concrete sub-class
 type EducationReport struct {
-	Reporter // Embedded Report
+	baseReport // Embedded Report
 }
 
 // Override finalize method
