@@ -27,8 +27,8 @@ namespace templatemethod {
 
     }
 }
-"templatemethod.Reporter" *-- "templatemethod.EducationReport"
-"templatemethod.Reporter" *-- "templatemethod.FinancialReport"
+"templatemethod.baseReport" *-right- "templatemethod.EducationReport"
+"templatemethod.baseReport" *-left- "templatemethod.FinancialReport"
 
 "templatemethod.Reporter" <|-- "templatemethod.baseReport"
 
