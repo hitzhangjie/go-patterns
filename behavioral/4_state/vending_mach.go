@@ -11,7 +11,7 @@
 // We have three concrete state implementations:
 // - `NoSelectionState`,
 // - `HasSelectionState`,
-// and `SoldState`.
+// - `SoldState`.
 //
 // Each state implements the `State` interface and provides its own behavior for
 // the methods.
@@ -78,7 +78,7 @@ func (n *NoSelectionState) DispenseItem() {
 type HasSelectionState struct{}
 
 func (h *HasSelectionState) InsertCoin() {
-	fmt.Println("✅ Coin inserted.")
+	fmt.Println("❌ Coin already inserted.")
 }
 
 func (h *HasSelectionState) SelectItem() {
@@ -97,7 +97,7 @@ func (s *SoldState) InsertCoin() {
 }
 
 func (s *SoldState) SelectItem() {
-	fmt.Println("❌ Item already dispensed.")
+	fmt.Println("❌ Item already selected and dispensed.")
 }
 
 func (s *SoldState) DispenseItem() {
