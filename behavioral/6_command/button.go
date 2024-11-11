@@ -2,6 +2,8 @@ package command
 
 import "fmt"
 
+// Button defines the button behavior, when we press it it will generate
+// a command that represents the action that we want to do.
 type Button interface {
 	Bind(Command)
 	Press()
@@ -16,10 +18,10 @@ func (b *baseButton) Bind(cmd Command) {
 }
 
 func (b *baseButton) Press() {
-	fmt.Println("delegate btn press event to command")
 	b.command.Execute()
 }
 
+// NewSaveButton create he save button
 func NewSaveButton() Button {
 	b := &saveButton{}
 	b.Text = "Save"
@@ -31,13 +33,24 @@ type saveButton struct {
 	Text string
 }
 
+func (b *saveButton) Press() {
+	fmt.Println("press [save] button")
+	b.baseButton.Press()
+}
+
+// NewCloseButton create the close button
+func NewCloseButton() Button {
+	b := &closeButton{}
+	b.Text = "Close"
+	return b
+}
+
 type closeButton struct {
 	baseButton
 	Text string
 }
 
-func NewCloseButton() Button {
-	b := &closeButton{}
-	b.Text = "Close"
-	return b
+func (b *closeButton) Press() {
+	fmt.Println("press [close] button")
+	b.baseButton.Press()
 }
