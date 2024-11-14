@@ -1,15 +1,21 @@
 package mediator
 
 import (
-	"fmt"
+	"log"
 	"sync"
 	"sync/atomic"
 	"time"
 )
 
+// Mediator defines the fitting room mediator behavior
 type Mediator interface {
+	// Wait let customer wait untils a fitting room released
 	Wait(*Customer) <-chan *FittingRoom
+
+	// Enter let customer enter a fitting room
 	Enter(*Customer)
+
+	// Leave let customer leave a fitting room
 	Leave(*Customer)
 }
 
@@ -24,6 +30,12 @@ type FittingRoom struct {
 	state    int
 	customer *Customer
 	last     time.Time
+}
+
+// a customer who waits for a fitting room
+type waiter struct {
+	*Customer
+	ch chan *FittingRoom
 }
 
 // NewFittingRoomMediator create a mediator who manages `cap` fitting rooms
@@ -48,11 +60,6 @@ type fittingRoomMediator struct {
 	Rooms []*FittingRoom
 
 	WaitingCustomers chan *waiter
-}
-
-type waiter struct {
-	*Customer
-	ch chan *FittingRoom
 }
 
 func (m *fittingRoomMediator) Wait(customer *Customer) <-chan *FittingRoom {
@@ -89,7 +96,7 @@ func (m *fittingRoomMediator) Enter(customer *Customer) {
 			return
 		}
 	}
-	fmt.Printf("%s no reserved room found\n", customer.Name)
+	log.Printf("%s no reserved room found\n", customer.Name)
 }
 
 func (m *fittingRoomMediator) Leave(customer *Customer) {
@@ -104,11 +111,11 @@ func (m *fittingRoomMediator) Leave(customer *Customer) {
 			room.state = idle
 			room.customer = nil
 			room.last = time.Now()
-			fmt.Printf("%s will leave room-%d\n", customer.Name, room.no)
+			log.Printf("%s will leave room-%d\n", customer.Name, room.no)
 			// let next waiting customer enter
 			select {
 			case waiter := <-m.WaitingCustomers:
-				fmt.Printf("%s will be notified to use room-%d\n", waiter.Name, room.no)
+				log.Printf("%s will be notified to use room-%d\n", waiter.Name, room.no)
 				room.state = reserved
 				room.customer = waiter.Customer
 				room.last = time.Now()
@@ -143,16 +150,16 @@ func (c *Customer) SetMediator(m Mediator) *Customer {
 func (c *Customer) Enter() {
 	room, ok := <-c.mediator.Wait(c)
 	if !ok {
-		fmt.Printf("%s wait too long, it's best to quit\n", c.Name)
+		log.Printf("%s wait too long, it's best to quit\n", c.Name)
 		return
 	}
-	fmt.Printf("%s could use reserved room-%d\n", c.Name, room.no)
+	log.Printf("%s could use reserved room-%d\n", c.Name, room.no)
 
 	c.mediator.Enter(c)
-	fmt.Printf("%s now is using room-%d\n", c.Name, room.no)
+	log.Printf("%s now is using room-%d\n", c.Name, room.no)
 }
 
 func (c *Customer) Leave() {
 	c.mediator.Leave(c)
-	fmt.Printf("%s has left\n", c.Name)
+	log.Printf("%s has left\n", c.Name)
 }
