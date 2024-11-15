@@ -9,6 +9,11 @@ namespace command {
         + Execute() error
 
     }
+    interface Shortcut  {
+        + Bind( Command) 
+        + Press() 
+
+    }
     class baseButton << (S,Aquamarine) >> {
         - command Command
 
@@ -18,6 +23,8 @@ namespace command {
     }
     class closeButton << (S,Aquamarine) >> {
         + Text string
+
+        + Press() 
 
     }
     class closeCommand << (S,Aquamarine) >> {
@@ -34,6 +41,8 @@ namespace command {
     class saveButton << (S,Aquamarine) >> {
         + Text string
 
+        + Press() 
+
     }
     class saveCommand << (S,Aquamarine) >> {
         - f *file
@@ -41,17 +50,23 @@ namespace command {
         + Execute() error
 
     }
-}
-"command.Button" "1" --> "1" "command.Command"
+    class shortcut << (S,Aquamarine) >> {
+        - keys []int32
+        - cmd Command
 
+        + Bind(c Command) 
+        + Press() 
+
+    }
+}
 "command.baseButton" *-- "command.closeButton"
 "command.baseButton" *-- "command.saveButton"
 
 "command.Button" <|-- "command.baseButton"
+"command.Shortcut" <|-- "command.baseButton"
 "command.Command" <|-- "command.closeCommand"
 "command.Command" <|-- "command.saveCommand"
-
-"command.saveCommand" --> "command.file"
-"command.closeCommand" --> "command.file"
+"command.Button" <|-- "command.shortcut"
+"command.Shortcut" <|-- "command.shortcut"
 
 @enduml
