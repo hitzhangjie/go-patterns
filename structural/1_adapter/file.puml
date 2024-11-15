@@ -27,11 +27,9 @@ namespace adapter {
     }
 }
 
+"adapter.Analyzer" <|-- "adapter.PowerfulAnalyzer"
 "adapter.Analyzer" <|-- "adapter.jsonAnalyzerAdapter"
-
-"adapter.jsonAnalyzerAdapter" ..> "adapter.PowerfulAnalyzer"
-"adapter.jsonAnalyzerAdapter" ..> "adapter.Record"
-
 "adapter.Stock" ..> "adapter.Record"
-
+"adapter.jsonAnalyzerAdapter" ..> "adapter.Record"
+"adapter.jsonAnalyzerAdapter" ..> "adapter.PowerfulAnalyzer"
 @enduml
