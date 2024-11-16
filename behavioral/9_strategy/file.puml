@@ -1,28 +1,36 @@
 @startuml
 namespace strategy {
     class BubbleSort << (S,Aquamarine) >> {
-        + Sort(values []int) 
+        + Sort(values []RankItem) 
 
     }
     class QuickSort << (S,Aquamarine) >> {
-        + Sort(values []int) 
+        + Sort(values []RankItem) 
+
+    }
+    class RankItem << (S,Aquamarine) >> {
+        + Name string
+        + Score int64
+
+    }
+    class RankList << (S,Aquamarine) >> {
+        - capacity int
+        - items []RankItem
+        - sorter Sorter
+
+        + AddItem(name string, score int64) 
+        + Items() []RankItem
 
     }
     interface Sorter  {
-        + Sort(values []int) 
-
-    }
-    class SorterContext << (S,Aquamarine) >> {
-        - sorter Sorter
-
-        + ExecuteSort(values []int) 
+        + Sort(values []RankItem) 
 
     }
 }
 
-"strategy.SorterContext" --> "strategy.Sorter"
-
 "strategy.Sorter" <|-- "strategy.BubbleSort"
 "strategy.Sorter" <|-- "strategy.QuickSort"
+"strategy.RankList" "1" --> "m" "strategy.RankItem"
+"strategy.RankList" --> "strategy.Sorter"
 
 @enduml

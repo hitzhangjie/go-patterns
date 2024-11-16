@@ -1,21 +1,21 @@
-Context: 
+Context:
 
     The strategy pattern is used when we have multiple algorithms/strategies
     that can be used interchangeably for a specific task. The client using the
     algorithms does not need to know about the implementation details of the
     algorithms.
-    
-Solution: 
-    
+
+Solution:
+
     Define an interface that will be used by all the different strategies.
     Create multiple strategy classes that implement this common interface. The
     context object will receive a strategy object and delegate the work to this
     object, rather than doing the work itself.
-    
+
 Variants:
 
     - Pass the strategy to the context as constructor parameter. The context will
-    store reference to the passed in strategy.  
+    store reference to the passed in strategy.
     - Allow the client to change the associated strategy dynamically at runtime.
     The context can define a setter method to allow changing strategies.
 
