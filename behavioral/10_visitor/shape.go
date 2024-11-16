@@ -3,6 +3,8 @@ package visitor
 import (
 	"fmt"
 	"math"
+
+	"github.com/hitzhangjie/go-patterns/behavior/10_visitor/shapes"
 )
 
 type Visitor interface {
@@ -14,7 +16,8 @@ type Shape interface {
 }
 
 type Square struct {
-	side float64
+	// we need to access the square data, but cannot modify it
+	shapes.Square
 }
 
 func (s *Square) Accept(v Visitor) {
@@ -22,7 +25,8 @@ func (s *Square) Accept(v Visitor) {
 }
 
 type Circle struct {
-	radius float64
+	// we need to access the circle data, but cannot modify it
+	shapes.Circle
 }
 
 func (s *Circle) Accept(v Visitor) {
@@ -37,9 +41,9 @@ type AreaVisitor struct {
 func (v AreaVisitor) Visit(shape Shape) {
 	switch v := shape.(type) {
 	case *Square:
-		fmt.Println("area of square:", math.Pow(v.side, 2))
+		fmt.Println("area of square:", math.Pow(v.Side, 2))
 	case *Circle:
-		fmt.Println("area of circle:", math.Pi*math.Pow(v.radius, 2))
+		fmt.Println("area of circle:", math.Pi*math.Pow(v.Radius, 2))
 	default:
 		panic("not supported")
 	}
@@ -53,9 +57,9 @@ type PerimeterVisitor struct {
 func (v *PerimeterVisitor) Visit(shape Shape) {
 	switch v := shape.(type) {
 	case *Square:
-		fmt.Println("perimeter of square:", 4*v.side)
+		fmt.Println("perimeter of square:", 4*v.Side)
 	case *Circle:
-		fmt.Println("perimeter of circle:", 2*math.Pi*v.radius)
+		fmt.Println("perimeter of circle:", 2*math.Pi*v.Radius)
 	default:
 		panic("not supported")
 	}

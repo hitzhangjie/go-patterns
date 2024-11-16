@@ -5,8 +5,6 @@ namespace visitor {
 
     }
     class Circle << (S,Aquamarine) >> {
-        - radius float64
-
         + Accept(v Visitor) 
 
     }
@@ -19,8 +17,6 @@ namespace visitor {
 
     }
     class Square << (S,Aquamarine) >> {
-        - side float64
-
         + Accept(v Visitor) 
 
     }
@@ -30,10 +26,15 @@ namespace visitor {
     }
 }
 
+"shapes.Circle" *-up- "visitor.Circle"
+"shapes.Square" *-up- "visitor.Square"
+
+note left of "shapes.Square": maintained by 3rd party or legacy code,\nit's difficult to modify it
+
+
 "visitor.Visitor" <|-- "visitor.AreaVisitor"
 "visitor.Shape" <|-- "visitor.Circle"
 "visitor.Visitor" <|-- "visitor.PerimeterVisitor"
 "visitor.Shape" <|-- "visitor.Square"
-"visitor.Visitor" --> "visitor.Shape"
 
 @enduml
